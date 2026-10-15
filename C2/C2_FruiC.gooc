@@ -2,6 +2,13 @@
 
 #include "goolstdlib.gooc"
 
+expr PartC = 9
+expr PartC_S_CRYSTAL_GLOW = 47   // Crystal_Glow
+expr PartC_S_SPAWN_52 = 52       // STATE_13 color
+
+expr ShadC = 29
+expr ShadC_S_SHADOW = 0           // Shadow_Init
+
 #sprite FRUIT_WUMPA [Cr10T]
 #tex 0x808080 1 0 0 3 32 32 32 32
 #tex 0x808080 1 0 0 3 64 96 32 32
@@ -304,7 +311,7 @@ sub FruitInit(reward, parent_id) {
             else {
                 var0 = 0
             }
-            spawn(9, 47, 1, var0)
+            spawn(PartC, PartC_S_CRYSTAL_GLOW, 1, var0)
         }
     }
     else if (reward >= 300.0) {                              // gem
@@ -370,7 +377,7 @@ sub WarpGemFlyStart() __trans {
     velz = ((vecz - z) * 25) / 50
     statetime = frametime
     statusb = 64
-    spawn(9, 52, 2, colr1 >> 1, colg1 >> 1, colb1 >> 1, 1.0, 0x999)
+    spawn(PartC, PartC_S_SPAWN_52, 2, colr1 >> 1, colg1 >> 1, colb1 >> 1, 1.0, 0x999)
     tpc = getins(WarpGemFly)
     WarpGemFly()
 }
@@ -382,7 +389,7 @@ sub WarpGemFollow() __trans {
 
 sub WarpGemFollowStart() __trans {
     if (FruitWarpId < 300.0) {
-        spawn(9, 47, 1, 0)
+        spawn(PartC, PartC_S_CRYSTAL_GLOW, 1, 0)
     }
     tpc = getins(WarpGemFollow)
     WarpGemFollow()
@@ -448,7 +455,7 @@ state FruiC_Crystal { // 4
             pooled = CRYSTALPOOL2 & (1 << (idx - 32))
         }
         if (!(entitygetstate(3) || saved || pooled)) {
-            spawn(29, 0, 1, 0, 0x1000, 0)
+            spawn(ShadC, ShadC_S_SHADOW, 1, 0, 0x1000, 0)
             FruitInit(200.0, id)
         }
         entitysetspawn(0)
@@ -1047,7 +1054,7 @@ state FruiC_Warp_Gem { // 15
             scaley = 0xA66
             scalez = 0xA66
             if (!var0) {
-                spawn(9, 47, 1, 0)
+                spawn(PartC, PartC_S_CRYSTAL_GLOW, 1, 0)
             }
             animseq = getanim(FRUIT_CRYSTAL)
         }
